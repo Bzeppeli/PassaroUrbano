@@ -10,5 +10,5 @@ export const ROUTES: Routes = [
     {path: 'restaurante', component: RestauranteComponent},
     {path: 'diversao', component: DiversaoComponent},
     {path: 'oferta', component: OfertaComponent},
-    {path: 'oferta/:id', component: OfertaComponent}
+    {path: 'oferta/:id', component: OfertaComponent}//mapeando para rota receber 1 parametro
 ];
