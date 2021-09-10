@@ -14,7 +14,7 @@
         </div>
 
         <div class="thumbnails">
-          <img *ngFor="let image of oferta.imagens" [src]="image.url"/>
+          <img *ngFor="let imagem of oferta.imagens" [src]="imagem.url" />
         </div>
       </div>
 
@@ -28,7 +28,7 @@
 
         <div class="row">
           <div class="col text-center">
-            <h1>R$ {{oferta.valor}}</h1>
+            <h1>{{ oferta.valor }}</h1>
           </div>
         </div>
 
@@ -43,5 +43,23 @@
     </div>
 
   </div>
-  <hr>
+
+  <div class="row" style="margin-bottom: 25px; margin-bottom: 150px">
+    <div class="col">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="como-usar" data-toggle="tab"  role="tab" aria-expanded="true">Como usar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="onde-fica" data-toggle="tab"  role="tab">Onde fica?</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+

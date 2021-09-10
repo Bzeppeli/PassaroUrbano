@@ -2,8 +2,7 @@ import { Oferta } from "./shared/oferta.module"
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { URL_API } from "./app.api"
-//import 'rxjs/add/operator/toPromises'
-//import { map } from 'rxjs/operators'
+
 
 @Injectable()
 export class OfertasService {
@@ -13,26 +12,42 @@ export class OfertasService {
 
 
     public getOfertas(): Promise<Oferta[]> {
-        return this.http.get(`${URL_API}?destaque=true`)
+        return this.http.get(`${URL_API}/ofertas?destaque=true`)
             .toPromise()
             .then((resposta: any) => resposta)
 
     }
 
     public getOfertasPorCategoria(categoria: string): Promise<Oferta[]> {
-        return this.http.get(`${URL_API}?categoria=${categoria}`)
+        return this.http.get(`${URL_API}/ofertas?categoria=${categoria}`)
             .toPromise()
             .then((resposta: any) => resposta)
     }
 
     public getOfertasPorId(id: string): Promise<Oferta> {
         return this.http
-            .get(`${URL_API}?id=${id}`)
+            .get(`${URL_API}/ofertas?id=${id}`)
             .toPromise()
             .then((resposta: any) => {
                 //onsole.log(resposta.shift());
                 return resposta[0];
             });
+    }
+
+    public getComoUsarOfertaProId(id: number): Promise<string>{
+        return this.http.get(`${URL_API}/como-usar?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => {
+            return resposta[0].descricao
+        })
+    }
+
+    public getOndeFicaPorId(id: number): Promise<string>{
+        return this.http.get(`${URL_API}/onde-fica?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => {
+            return resposta[0].descricao
+        })
     }
 }
 
