@@ -9,7 +9,7 @@ import { OndeFicaComponent } from "./oferta/onde-fica/onde-fica.component";
 
 export const ROUTES: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'restaurante', component: RestauranteComponent },
+    { path: 'restaurantes', component: RestauranteComponent },
     { path: 'diversao', component: DiversaoComponent },
     { path: 'oferta', component: OfertaComponent },
     {
