@@ -1,15 +1,15 @@
 <div class="container">
   <div class="oferta" *ngIf="oferta !== undefined">
 
-
-    <!--<div id="row">
-      <div id="col">
-        <a [routerLink]="['/oferta', 1]">Oferta 1</a>
-        <a [routerLink]="['/oferta', 3]">Oferta 3</a>
-        <a [routerLink]="['/oferta', 6]">Oferta 6</a>
+    <!--
+    <div class="row">
+      <div class="col">
+          <a [routerLink]="['/oferta', 1]">Oferta 1 </a>
+          <a [routerLink]="['/oferta', 3]">Oferta 3 </a>
+          <a [routerLink]="['/oferta', 6]">Oferta 6  </a>
       </div>
-    </div>-->
-
+    </div>
+-->
     <div class="row">
       <div class="col">
         <h4>{{ oferta.descricao_oferta }}</h4>
@@ -37,7 +37,7 @@
 
         <div class="row">
           <div class="col text-center">
-            <h1>{{ oferta.valor }}</h1>
+            <h1>{{ oferta.valor | currency: 'BRL' }}</h1>
           </div>
         </div>
 

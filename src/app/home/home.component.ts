@@ -1,6 +1,6 @@
+import { Oferta } from './../shared/oferta.model';
 import { Component, OnInit } from '@angular/core';
-import { OfertasService } from '../ofertas.service';
-import { Oferta } from '../shared/oferta.module';
+import { OfertasService } from '../ofertas.service'
 
 @Component({
   selector: 'app-home',
@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
       .then((ofertas: Oferta[]) => {
         this.ofertas = ofertas
       })
-      .catch((param: any) => { 
-        console.log(param) 
+      .catch((param: any) => {
+  
       })
   }
 

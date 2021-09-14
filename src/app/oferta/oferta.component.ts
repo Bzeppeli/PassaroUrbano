@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 //import { Observable, interval, Observer, Subscription } from 'rxjs';
  
 import { OfertasService } from '../ofertas.service';
-import { Oferta } from '../shared/oferta.module';
+import { Oferta } from '../shared/oferta.model';
 
 
 @Component({
@@ -14,8 +14,9 @@ import { Oferta } from '../shared/oferta.module';
 })
 export class OfertaComponent implements OnInit, OnDestroy {
 
-  /*private tempoObservableSubcription!: Subscription
-  private meuObservableTesteSubscription!: Subscription*/
+  /*
+  private tempoObservableSubcription!: Subscription
+  private meuObservableTesteSubscription!: Subscription */
 
   public oferta!: Oferta
 
@@ -25,11 +26,18 @@ export class OfertaComponent implements OnInit, OnDestroy {
       ) { }
 
   ngOnInit(): void {
-    this.ofertasService.getOfertasPorId(this.route.snapshot.params['id'])
+
+    this.route.params.subscribe((parametros: Params) => {
+      this.ofertasService.getOfertaPorId(parametros.id)
       .then((oferta: Oferta) => {
         this.oferta = oferta
         //console.log(this.oferta)
       })
+      
+    })
+
+
+ 
 
   /*
       this.route.params.subscribe((parametro: any) => {
@@ -38,8 +46,8 @@ export class OfertaComponent implements OnInit, OnDestroy {
          () => console.log('processamento foi classificado como')
       })
        */
- 
-      /*let tempo = interval(2000)
+ /*
+      let tempo = interval(2000)
 
       this.tempoObservableSubcription  = tempo.subscribe((intervalo: number) => {
         console.log(intervalo)
@@ -60,12 +68,12 @@ export class OfertaComponent implements OnInit, OnDestroy {
         (resultado: number) => console.log(resultado + 10), //next
         (erro: string) => console.log(erro),                //erro
         ()  =>  console.log('stream de enventos foi finalizada') //finalizacao - complete
-      )*/
+      ) */
   }
 
   ngOnDestroy() {
-    //this.meuObservableTesteSubscription.unsubscribe()
-    //this.tempoObservableSubcription.unsubscribe()
+   /* this.meuObservableTesteSubscription.unsubscribe()
+    this.tempoObservableSubcription.unsubscribe() */
   }
  
 }

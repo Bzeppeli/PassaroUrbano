@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { Oferta } from '../shared/oferta.model';
+import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
-import { Oferta } from '../shared/oferta.module';
+import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-topo',
@@ -13,47 +13,47 @@ import { Oferta } from '../shared/oferta.module';
 export class TopoComponent implements OnInit {
 
   public ofertas!: Observable<Oferta[]>
-  public ofertasFiltradas!: Oferta[]
-
-  private subjectPesqisa: Subject<string> = new Subject<string>()
+ 
+  private subjectPesquisa: Subject<string> = new Subject<string>()
 
   constructor(private ofertasService: OfertasService) { }
 
   ngOnInit(): void {
-     this.ofertas = this.subjectPesqisa
-     .pipe(debounceTime(300))
-     .pipe(distinctUntilChanged())
-     .pipe(switchMap((termoDaBusca: string)=> {
-        console.log('requisicao http para api')
-        if(termoDaBusca.trim() === ''){
-          //retornar um observable de array de ofertas vazio
-          return of<Oferta[]>([])
-        }
-        return this.ofertasService.pesquisaOfertas(termoDaBusca)
-     }))
-     .pipe(catchError((err: any) => {
-       //console.log(err)
-       return of<Oferta[]>([])
-     }))
+    this.ofertas = this.subjectPesquisa //retorno Oferta[]
+      .pipe(debounceTime(1000))  //executa a acao do switchMap apos 1 segundo
+      .pipe(distinctUntilChanged())  // para fazer pesquisas distintas
+      .pipe(switchMap((termo: string) => {
 
-     this.ofertas.subscribe((ofertas: Oferta[]) => {
-       //console.log(ofertas)
-       this.ofertasFiltradas = ofertas
-     })
+          if(termo.trim() === '') {
+            //retornar um observable de array de ofertas vazio
+            return of<Oferta[]>([])
+          }
+
+         return this.ofertasService.pesquisaOfertas(termo)
+
+      }))
+      .pipe(catchError((err: any) => {
+        return of<Oferta[]>([])
+      }))
   }
 
-  public pesquisa(termoDaBusca: string): void{
-    //console.log('key up caracter: ', termoDaBusca)
-    this.subjectPesqisa.next(termoDaBusca)
+  public pesquisa(termoDaBusca: string): void {
+      this.subjectPesquisa.next(termoDaBusca)
+
 
 
 
    /* this.ofertas = this.ofertasService.pesquisaOfertas(termoDaBusca)
 
-    this.ofertas.subscribe((ofertas: Oferta[]) => console.log(ofertas),
-                            (erro:any) => console.log('ofertas não carregadas', erro),
-                            () => console.log('fluxo completo')
-    )*/
+    this.ofertas.subscribe(
+      (ofertas: Oferta[]) => console.log(ofertas),
+      (erro: any) => console.log('Erro status: ', erro.status),
+      () => console.log('fluxo de eventos completo')
+      ) */
+  }
+
+  public limpaPesquisa(): void {
+    this.subjectPesquisa.next('')
   }
 
 }
